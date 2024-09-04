@@ -112,5 +112,15 @@ select * FROM order_detail WHERE id_order = 1;
 -- xem chi tiết đơn hàng có id = 1 và lấy ra id_order,productName,quantity,price,totalpirce 
 SELECT order_detail.id_order,order_detail.quantity,order_detail.price, order_detail.price * order_detail.quantity as total_price, product.name as produt_name
 FROM order_detail 
-JOIN product
-ON order_detail.id_product = product.id WHERE order_detail.id_order = 1;
+JOIN product;
+
+-- == Lấy về danh sách đơn hàng , id đơn hàng, tên khách hàng, địa chỉ ship phone,status 
+
+SELECT * FROM orders; 
+
+SELECT orders.id,orders.phone,orders.ship_address,account.full_name as 'account_name'
+FROM orders
+JOIN account 
+ON orders.id_account = account.id
+
+
