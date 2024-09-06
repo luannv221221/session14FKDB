@@ -121,6 +121,69 @@ SELECT * FROM orders;
 SELECT orders.id,orders.phone,orders.ship_address,account.full_name as 'account_name'
 FROM orders
 JOIN account 
-ON orders.id_account = account.id
+ON orders.id_account = account.id;
 
+-- SELECT Kết Hợp mệnh đề where 
 
+SELECT * FROM product;
+
+-- where với toán tử > 
+-- lấy ra danh sách sản phẩm có giá lớn hơn 20 
+SELECT * FROM product WHERE price > 20;
+-- Lấy ra các sản phẩm có category_id = 1 
+SELECT * FROM product WHERE category_id = 1;
+-- lấy ra sản phẩm có giá lớn hơn 19 và nhở hơn 100 
+SELECT * FROM product WHERE price > 19 AND price < 100;
+SELECT * FROM product WHERE price BETWEEN 19 AND 100;
+
+-- Lấy Những sản phẩm có category_id = 1,2,3 ;
+SELECT * FROM product WHERE category_id IN (1,2,3); 
+
+-- Toán tử LIKE trong mệnh đề where 
+-- Lấy ra những sản phẩm mà tên có chứa chữ t 
+SELECT * FROM product WHERE name LIKE '%t%';
+
+-- Lấy ra những sản phẩm mà tên có chứa chữ phone 
+SELECT * FROM product WHERE name LIKE '%phone%';
+
+-- Lấy ra những sản phẩm mà có tên bắt đầu bằng chữ s 
+SELECT * FROM product WHERE name LIKE 's%';
+
+-- Lấy ra những sản phẩm mà có tên bắt đầu bằng chữ e
+SELECT * FROM product WHERE name LIKE '%e';
+
+-- LIMIT 
+
+-- lấy ra 3 sản phẩm đầu của bảng sản phẩm 
+SELECT * FROM product LIMIT 3; 
+
+-- LIMIT OFFSET 
+-- phân trang mỗi trang thì có 2 sản phẩm 
+-- Trang đầu 
+-- Cách 1
+SELECT * FROM product LIMIT 0,2;
+-- Cách 2 
+SELECT * FROM product LIMIT 2 OFFSET 0;
+-- Trang 2 
+SELECT * FROM product LIMIT 2 OFFSET 2;
+-- Trang 3 
+SELECT * FROM product limit 2 OFFSET 4;
+
+-- ORDER BY 
+SELECT * FROM product; 
+
+-- Sắp xếp sản phẩm theo giá tăng dần 
+SELECT * FROM product ORDER BY price ASC; 
+
+-- sắp xếp sản phẩm theo giá khuyến mãi giảm dần
+SELECT * FROM product ORDER BY sale_price DESC; 
+
+SELECT * FROM orders;
+SELECT * FROM order_detail;
+-- Lấy về danh sách đơn hàng và tổng sản phẩm của đơn hàng đó 
+SELECT orders.id,orders.id_account,orders.status,count(order_detail.id_order) as total_product 
+FROM orders 
+JOIN order_detail
+ON orders.id = order_detail.id_order
+GROUP BY orders.id,orders.id_account,orders.status
+HAVING orders.status = 0;
